@@ -38,11 +38,12 @@
 
 ### 4.1 核心产出
 
-- 最终 review 源文件：[`review/review.tex`](review/review.tex)
-- 最终提交文件：[`review/review.pdf`](review/review.pdf)
+- 当前 review 草稿：[`review/review.md`](review/review.md)
 - 过程材料按 `notes/00-xxxx.md`、`notes/01-xxxx.md`、`notes/02-xxxx.md` ... 递增编号维护
 - 已有选题说明：[`notes/00-论文选题.md`](notes/00-%E8%AE%BA%E6%96%87%E9%80%89%E9%A2%98.md)
+- 已有双语阅读版：[`paper/bilingual-ver.pdf`](paper/bilingual-ver.pdf)
 - AI 使用记录按 `ai-log/00-xxxx.md`、`ai-log/01-xxxx.md`、`ai-log/02-xxxx.md` ... 递增编号维护
+- 已有 AI 使用记录：[`ai-log/01-bilingual-translation-source-record.md`](ai-log/01-bilingual-translation-source-record.md)
 
 ### 4.2 review 预期结构
 
@@ -96,8 +97,9 @@
 为便于教师或助教检查版本历史，当前仓库按如下方式使用：
 
 - `paper/`：保存论文原文。
+- `paper/`：保存论文原文与双语阅读版 PDF。
 - `notes/`：保存按编号递增组织的过程材料，如选题、阅读笔记、问题清单、资料整理等。
-- `review/`：保存 review 的 LaTeX 源文件、草稿与相关材料。
+- `review/`：保存 review 的草稿与后续正式写作材料。
 - `ai-log/`：保存按编号递增组织的 AI 辅助理解、检索、问答与整理记录。
 
 后续每次重要推进，尽量体现在：
@@ -112,8 +114,12 @@
 - [x] 已确定论文题目
 - [x] 已完成选题理由整理
 - [x] 已建立过程记录仓库结构
+- [x] 已保存论文原文 PDF
+- [x] 已生成双语阅读版 PDF
+- [x] 已补充一份 AI 使用记录
 - [ ] 完成论文精读与定理梳理
 - [ ] 完成相关工作调研
+- [ ] 完成结构化阅读笔记
 - [ ] 完成 review 初稿
 - [ ] 完成修订、贡献说明与最终提交版本
 
