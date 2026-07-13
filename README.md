@@ -38,7 +38,6 @@
 
 ### 4.1 核心产出
 
-- 当前 review 草稿：[`review/review.md`](review/review.md)
 - 第一版 LaTeX 稿：[`review/review.tex`](review/review.tex)
 - 第一版 PDF：[`review/review.pdf`](review/review.pdf)
 - 过程材料按 `notes/00-xxxx.md`、`notes/01-xxxx.md`、`notes/02-xxxx.md` ... 递增编号维护

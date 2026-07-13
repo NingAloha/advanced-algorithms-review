@@ -133,15 +133,61 @@ random bits；
 \frac{1}{\operatorname{poly}(n)}.
 \end{aligned}\]
 
-这个结果在概率保证级别上与已有工作同级，但在空间效率和技术路线方面更有新意。
+这个结果不是随机位数量上的新纪录：论文指出，Dietzfelbinger、Gil、Matias 和 Pippenger 的工作已经能在当前 key-size setting 下用 \(O(\log n)\) random bits 达到同级别概率保证。它的价值主要在于不直接依赖在线 hash-function evaluation 的结构路线、对 gradually-increasing-independence 的初始化阶段使用，以及它后来作为 succinct transformation 的关键组件。
 
 \subsection{succinct transformation}
 
 在上述两条结果之外，论文还证明了一个更通用的 succinctness 结果：
 
-\begin{quote}任何 constant-time dictionary，都可以被变换成一个 succinct constant-time dictionary，同时近似保留它的 random-bit usage 与 failure probability。\end{quote}
+\begin{quote}在 Theorem 7 的前提条件下，符合规定空间形式的 constant-time dictionary，可以被变换成 succinct constant-time dictionary，同时近似保留它的 random-bit usage 与 failure probability。\end{quote}
 
 因此，前面两条主结果都能被推进到 succinct setting 中。这一步把论文从“两个具体构造”提升成了“一个新的通用结构变换框架”。
+
+\section{模型边界与结果口径}
+
+前面的主要结果需要放在论文规定的模型中理解。首先，Section 2--5 主要讨论至多存储 \(n\) 个 \(\Theta(\log n)\)-bit key/value pairs 的非 succinct dictionary，并默认机器字长为 \(\Theta(\log n)\)；更大字长的情形放在 Appendix A，不能直接套用前面的结论。
+
+其次，论文中的 \texttt{failure} 主要不是正确性错误，而是某次操作耗时超过常数时间。在 succinct dictionary 中，failure 还可能表示结构无法满足规定的空间界。因此，本文后面所说的“失败概率”应理解为时间或空间保证失败概率，而不是查询返回错误答案的概率。
+
+论文还采用了几个重要的分析约定：操作序列独立于随机比特，即 adversary 是 oblivious 的；通过周期性 rebuild，把一个分析阶段限制在 \(O(n)\) 次操作内；概率是针对任意给定操作的 per-operation 概率，不是整个无限生命周期永不失败的概率；一旦阶段内发生 failure，后续操作可以退化为较慢实现。
+
+这些条件意味着论文证明的是一种模型化的概率时间保证，而不是对任意自适应输入、任意长操作序列和所有随机比特都成立的工程实现承诺。
+
+Theorem 7 也不是对任意 constant-time dictionary 无条件适用。输入需要是论文规定的 \((r(n),p(n),n\log n)\)-dictionary，且 \(r(n)\)、\(p(n)\) 满足单调性和范围约束，包括
+
+\[
+\exp(-n^{1-\epsilon})\le p(n)\le 1/\operatorname{polylog}(n).
+\]
+
+变换后的随机位和失败概率也不是完全不变，而是分别增加
+
+\[
+(\log p(n)^{-1})(\log\log n)^3
+\]
+
+级别的随机位，并把失败概率参数变为 \(p(n/\log\log n)\)。
+
+\section{相关工作与课程联系}
+
+\subsection{相关工作的主线}
+
+传统 hash table 通过 hash function 把 key 映射到数组位置，universal hashing、perfect hashing、cuckoo hashing 等路线都把冲突控制交给显式随机映射，再结合重建、多个候选位置或二级结构保证性能。本文并不是否定这些技术，而是追问：随机性是否可以直接嵌入数据结构布局，从而绕开“既要足够强、又要常数时间求值”的 hash-function family 瓶颈。
+
+论文直接依赖或重点对照的工作包括：Fredman--Komlós--Szemerédi 的 perfect hashing；Fredman--Willard 与 Pătraşcu--Thorup 的 fusion/dynamic fusion node；Dietzfelbinger、Gil、Matias 和 Pippenger 的 polynomial hash functions；Raman--Rao 的 succinct dynamic dictionaries；Celis--Reingold--Segev--Wieder 以及 Meka--Reingold--Rothblum--Rothblum 的 load-balancing families；以及 Pătraşcu--Thorup 关于 simple tabulation hashing 的研究。
+
+这些工作分别提供了空间压缩、局部 deterministic constant-time、少随机位 hashing、succinct reduction、负载平衡和强概率 hashing 等工具。本文的综合性贡献在于把其中一部分工具重新放入 rotated trie 的结构框架中，而不是继续寻找一个统一的完美 hash function。
+
+论文发表后的相关方向应谨慎表述为相邻研究，而不是本文的直接定理级后续。近年的 \texttt{Modern Hashing Made Simple} 继续研究如何用较标准的工具获得强时间和空间保证；\texttt{Optimal Non-Oblivious Open Addressing} 则研究满负载、动态空间和高概率常数时间的 open-addressed table。它们与本文共享重新审视传统 hash-table 约束的问题意识，但技术模型不同，并不等同于对 rotated trie 或 Theorem 7 的直接改进。
+
+\subsection{与课程内容的联系}
+
+\begin{itemize}
+\item \textbf{Hashing：} 论文直接研究有限随机位、independence、冲突和最大负载，核心问题与课程 Hashing 部分一致。
+\item \textbf{Perfect hashing：} perfect hashing 主要追求给定集合上的无冲突；本文允许极低概率的时间或空间失败，因此目标是概率保证而不是绝对无冲突。
+\item \textbf{Cuckoo hashing：} cuckoo hashing 依靠多个候选位置和重定位控制冲突；rotated trie 则通过 source node 的局部 rotation 和 overlay 控制负载，体现了另一种结构化随机路线。
+\item \textbf{Bloom filter：} Bloom filter 的 false positive 是语义层面的近似错误；本文的 failure 是时间或空间保证失败，不能混为一谈。
+\item \textbf{Succinct structures：} Section 6 通过 trie path 隐式保存 key 的高位，再转成 many-sets，并用 skeleton、storage array 和 backyard 控制空间与失败元素，是本文与 succinct data structures 最直接的连接。
+\end{itemize}
 
 \section{整篇论文的技术主线}
 
@@ -438,5 +484,18 @@ Section 6 的通用 transformation 让论文的价值超出了“发明两个结
 \begin{quote}当一个经典数据结构问题长期被某种实现范式所束缚时，真正的突破可能不是继续在旧范式里打磨工具，而是重新思考：这个问题的本质目标到底是什么，哪些组件只是历史上常用、却并非逻辑上必要。\end{quote}
 
 在这个意义上，\texttt{\detokenize{A Hash Table Without Hash Functions}} 不只是关于 hash table 的论文，也是一篇很典型的“通过重述问题来获得新结构”的理论数据结构论文。
+
+\section{参考文献与调研边界}
+
+正文中的相关工作以原论文参考文献为主，重点包括 FKS perfect hashing、fusion trees 和 dynamic fusion nodes、Dietzfelbinger 等人的 polynomial hash functions、Raman--Rao succinct dictionaries、Celis 等人与 Meka 等人的 load-balancing families，以及 Pătraşcu--Thorup 的 simple tabulation hashing。论文发表后的相邻方向只作为背景补充，不把它们宣称为本文的直接延伸：
+
+\begin{itemize}
+\item William Kuszmaul, \textit{A Hash Table Without Hash Functions, and How to Get the Most Out of Your Random Bits}, FOCS 2022。
+\item Rajeev Raman and Satti Srinivasa Rao, \textit{Succinct Dynamic Dictionaries and Trees}, 2003。
+\item Mihai Pătraşcu and Mikkel Thorup, \textit{The Power of Simple Tabulation Hashing}, 2012。
+\item L. Elisa Celis, Omer Reingold, Gil Segev, and Udi Wieder, \textit{Balls and Bins: Smaller Hash Families and Faster Evaluation}, 2011；Raghu Meka et al., \textit{Fast Pseudorandomness for Independence and Load Balancing}, 2014。
+\item Michael A. Bender, Martín Farach-Colton, John Kuszmaul, and William Kuszmaul, \textit{Modern Hashing Made Simple}，作为相邻的现代 hashing 方向。
+\item Michael A. Bender, William Kuszmaul, and Renfei Zhou, \textit{Optimal Non-Oblivious Open Addressing}，作为相邻的 open-addressing 方向。
+\end{itemize}
 
 \end{document}
