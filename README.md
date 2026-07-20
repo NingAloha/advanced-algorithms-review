@@ -38,13 +38,15 @@
 
 ### 4.1 核心产出
 
-- 第一版 LaTeX 稿：[`review/review.tex`](review/review.tex)
-- 第一版 PDF：[`review/review.pdf`](review/review.pdf)
+- LaTeX 源稿：[`review/review.tex`](review/review.tex)
+- PDF 成稿：[`review/review.pdf`](review/review.pdf)
 - 过程材料按 `notes/00-xxxx.md`、`notes/01-xxxx.md`、`notes/02-xxxx.md` ... 递增编号维护
 - 已有选题说明：[`notes/00-论文选题.md`](notes/00-%E8%AE%BA%E6%96%87%E9%80%89%E9%A2%98.md)
 - 已有双语阅读版：[`paper/bilingual-ver.pdf`](paper/bilingual-ver.pdf)
 - AI 使用记录按 `ai-log/00-xxxx.md`、`ai-log/01-xxxx.md`、`ai-log/02-xxxx.md` ... 递增编号维护
-- 已有 AI 使用记录：[`ai-log/01-bilingual-translation-source-record.md`](ai-log/01-bilingual-translation-source-record.md)
+- 已有 AI 使用记录：
+  - [`ai-log/01-bilingual-translation-source-record.md`](ai-log/01-bilingual-translation-source-record.md)
+  - [`ai-log/02-citation-indexing-record.md`](ai-log/02-citation-indexing-record.md)
 
 ### 4.2 review 预期结构
 
@@ -117,12 +119,13 @@
 - [x] 已建立过程记录仓库结构
 - [x] 已保存论文原文 PDF
 - [x] 已生成双语阅读版 PDF
-- [x] 已补充一份 AI 使用记录
+- [x] 已补充现有 AI 使用记录
 - [x] 已完成主要章节精读与定理思路梳理
-- [ ] 完成相关工作调研
+- [x] 已完成相关工作调研与正文引用整理
 - [x] 完成结构化阅读笔记
-- [x] 完成 review 初稿（Markdown 与第一版 LaTeX）
-- [ ] 完成修订、贡献说明与最终提交版本
+- [x] 完成 review 的 LaTeX 源稿与 PDF 成稿
+- [x] 完成严谨性修订、成员贡献说明与参考文献整理
+- [x] 在课程表格中登记公开仓库链接并完成最终提交
 
 ## 8. 写作原则
 
